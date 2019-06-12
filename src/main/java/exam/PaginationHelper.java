@@ -50,15 +50,16 @@ public class PaginationHelper<I> {
      * 如果pageIndex为非法值则返回-1
      */
     public int pageItemCount(int pageIndex) {
-        if (pageIndex < 0 || pageIndex>=pageCount()) {
+        int pageCount = pageCount();
+        if (pageIndex < 0 || pageIndex>=pageCount) {
             return -1;
         }
-        if (pageIndex != pageCount() - 1) {
+        if (pageIndex != pageCount - 1) {
             return itemsPerPage;
         }
 
 
-        return itemCount() - (pageIndex - 1) * itemsPerPage;
+        return itemCount() - pageIndex * itemsPerPage;
 
     }
 
@@ -68,7 +69,8 @@ public class PaginationHelper<I> {
      * 如果itemIndex为非法值则返回-1
      */
     public int pageIndex(int itemIndex) {
-        if (itemIndex >= itemsPerPage && itemIndex < 0) {
+        int totalCount = itemCount();
+        if (itemIndex >= totalCount || itemIndex < 0) {
             return -1;
         }
         int page = 0;
@@ -77,7 +79,7 @@ public class PaginationHelper<I> {
             page++;
             itemIndex -= itemsPerPage;
         }
-        return page - 1;
+        return page;
     }
 
 
